@@ -1,7 +1,8 @@
-.idea
+.idea/
 build/
 out/
 .gradle/
 gradlew
 gradlew.bat
 settings.gradle
+gradle/
