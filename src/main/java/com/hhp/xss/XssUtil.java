@@ -11,6 +11,8 @@ public class XssUtil {
             // src='...'
             Pattern.compile("src[\r\n]*=[\r\n]*\\\'(.*?)\\\'", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
             Pattern.compile("src[\r\n]*=[\r\n]*\\\"(.*?)\\\"", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
+            // onerror, onclick
+            Pattern.compile("(on.*?=)(.*?\\))", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
             // lonely script tags
             Pattern.compile("</script>", Pattern.CASE_INSENSITIVE),
             Pattern.compile("<script(.*?)>", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
@@ -28,8 +30,8 @@ public class XssUtil {
             Pattern.compile("onload(.*?)=", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
             // alert
             Pattern.compile("alert(.*?)", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
-            Pattern.compile("<", Pattern.MULTILINE | Pattern.DOTALL),
-            Pattern.compile(">", Pattern.MULTILINE | Pattern.DOTALL),
+//            Pattern.compile("<", Pattern.MULTILINE | Pattern.DOTALL),
+//            Pattern.compile(">", Pattern.MULTILINE | Pattern.DOTALL),
             //Checks any html tags i.e. <script, <embed, <object etc.
             Pattern.compile("(<(script|iframe|embed|frame|frameset|object|img|applet|body|html|style|layer|link|ilayer|meta|bgsound))")
     };
@@ -45,7 +47,7 @@ public class XssUtil {
     public static boolean checkIsXss(String value) {
         boolean isXss = false;
         if (value == null) {
-            return isXss;
+            return false;
         }
         for (Pattern scriptPattern : XSS_PATTERNS) {
             Matcher matcher = scriptPattern.matcher(value);
