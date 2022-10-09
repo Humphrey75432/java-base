@@ -1,0 +1,1 @@
+I just want to test whether you can zip both directory and file.
